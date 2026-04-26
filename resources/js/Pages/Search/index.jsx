@@ -1,13 +1,17 @@
 import "../../../css/search.css";
+import { Link, usePage } from "@inertiajs/react";
 
 export default function Index() {
+    const { auth } = usePage().props;
+    const avatarHref = auth.user ? route("dashboard") : route("login");
+
     return (
         <div className="search-page">
 
             {/* NAVBAR */}
             <nav className="search-navbar">
                 <div className="search-navbar-left">
-                    <a href="/" className="search-logo">Juanan</a>
+                    <Link href={route("landing")} className="search-logo">Juanan</Link>
                     <div className="search-bar-wrapper">
                         <input
                             type="text"
@@ -23,7 +27,7 @@ export default function Index() {
                 </div>
                 <div className="search-navbar-right">
                     <span className="material-icons">apps</span>
-                    <div className="avatar">JA</div>
+                    <Link href={avatarHref} className="avatar">JA</Link>
                 </div>
             </nav>
 
@@ -50,7 +54,7 @@ export default function Index() {
 
                     {/* CABECERA DE RESULTADO PRINCIPAL */}
                     <div className="result-header">
-                        <h1 className="result-header-title">Juan Antonio García</h1>
+                        <h1 className="result-header-title">Juanan Álvarez Peinado</h1>
                         <p className="result-header-subtitle">Desarrollador Full Stack · <span className="result-header-dots">⋮</span></p>
                         <div className="result-header-tabs">
                             <button className="result-tab active">Información general</button>                           
@@ -164,9 +168,9 @@ export default function Index() {
                             </div>
                             <span className="result-item-dots">⋮</span>
                         </div>
-                        <a href={route("game")} className="result-item-title">Juega — Juan Antonio García</a>
+                        <a href={route("game")} className="result-item-title">¿Estás aburrido? </a>
                         <p className="result-item-desc">
-                            Sección interactiva del portfolio. Descubre proyectos y experimentos de una forma diferente.
+                            Echate unas partidas y intenta superar mi récord. Un juego sencillo pero adictivo desarrollado con <strong>React y JavaScript</strong>.
                         </p>
                     </div>
 

@@ -1,8 +1,11 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import "../../../css/landing.css";
 
 
 export default function Index() {
+    const { auth } = usePage().props;
+    const avatarHref = auth.user ? route("dashboard") : route("login");
+
     return (
         <div className="landing-page">
 
@@ -15,8 +18,8 @@ export default function Index() {
                 <div className="navbar-right">
                     <a href="#">GitHub</a>
                     <a href="#">LinkedIn</a>
-                    <div className="apps-icon">⋮⋮⋮</div>
-                    <div className="avatar">JA</div>
+                    <div className="apps-icon">⋮⋮⋮</div>                  
+                    <Link href={avatarHref} className="avatar">JA</Link>
                 </div>
             </nav>
 
@@ -29,7 +32,7 @@ export default function Index() {
                         type="text"
                         className="search-input"
                         placeholder=""
-                        value="Quien es Juanan?"
+                        defaultValue="Quien es Juanan?"
                     />
                     <div className="search-icons">
                         <span className="material-icons">search</span>
