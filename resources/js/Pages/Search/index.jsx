@@ -119,7 +119,7 @@ export default function Index() {
                             </div>
                             <span className="result-item-dots">⋮</span>
                         </div>
-                        <a href="#" className="result-item-title">Mis Proyectos — Juan Antonio García</a>
+                        <a href={route("projects")} className="result-item-title">Mis Proyectos — Juan Antonio García</a>
                         <p className="result-item-desc">
                             Colección de proyectos desarrollados con <strong>Laravel, React, Inertia.js y Node.js</strong>. Desde aplicaciones web completas hasta APIs REST y herramientas internas.
                         </p>
