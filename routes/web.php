@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\LandingController; 
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\AboutMeController;
 
 
 // Rutas protegidas por autenticación
@@ -13,6 +14,10 @@ Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 // Ruta para la página search
 Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+// About me
+Route::get('/about-me', [AboutMeController::class, 'index'])->name('about-me');
+
 
 
 Route::get('/dashboard', function () {

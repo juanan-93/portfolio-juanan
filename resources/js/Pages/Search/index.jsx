@@ -99,7 +99,7 @@ export default function Index() {
                             </div>
                             <span className="result-item-dots">⋮</span>
                         </div>
-                        <a href="#" className="result-item-title">Juan Antonio — Desarrollador Full Stack | Portfolio</a>
+                        <a href={route("about-me")} className="result-item-title">Juan Antonio — Desarrollador Full Stack | Portfolio</a>
                         <p className="result-item-desc">
                             Desarrollador Full Stack con experiencia en <strong>Laravel, React e Inertia.js</strong>. Apasionado por crear aplicaciones web modernas, limpias y escalables. Disponible para proyectos freelance o posición estable.
                         </p>
