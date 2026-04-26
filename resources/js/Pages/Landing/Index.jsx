@@ -1,4 +1,6 @@
+import { Link } from "@inertiajs/react";
 import "../../../css/landing.css";
+
 
 export default function Index() {
     return (
@@ -27,6 +29,7 @@ export default function Index() {
                         type="text"
                         className="search-input"
                         placeholder=""
+                        value="Quien es Juanan?"
                     />
                     <div className="search-icons">
                         <span className="material-icons">search</span>
@@ -35,7 +38,7 @@ export default function Index() {
                 </div>
 
                 <div className="buttons">
-                    <button className="btn">Buscar sobre mí</button>
+                    <Link href={route("search")} className="btn">Buscar sobre mí</Link>
                     <button className="btn">Voy a tener suerte</button>
                 </div>
 
