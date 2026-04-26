@@ -164,7 +164,7 @@ export default function Index() {
                             </div>
                             <span className="result-item-dots">⋮</span>
                         </div>
-                        <a href="#" className="result-item-title">Juega — Juan Antonio García</a>
+                        <a href={route("game")} className="result-item-title">Juega — Juan Antonio García</a>
                         <p className="result-item-desc">
                             Sección interactiva del portfolio. Descubre proyectos y experimentos de una forma diferente.
                         </p>

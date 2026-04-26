@@ -7,19 +7,33 @@ use Inertia\Inertia;
 use App\Http\Controllers\LandingController; 
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AboutMeController;
+use App\Http\Controllers\GameController;
 
 
-// Rutas protegidas por autenticación
+
+// ====================================================================
+// LANDING
+// ====================================================================
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
-// Ruta para la página search
+
+// ====================================================================
+//SEARCH
+// ====================================================================
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
-// About me
+
+// ====================================================================
+// ABOUT ME
+// ====================================================================
 Route::get('/about-me', [AboutMeController::class, 'index'])->name('about-me');
 
-//Game
-
+// ====================================================================
+// GAME
+// ====================================================================
+Route::get('/game', [GameController::class, 'index'])->name('game');
+//Game - Store score
+Route::post('/game/scores', [GameController::class, 'store'])->name('game.scores.store');
 
 
 Route::get('/dashboard', function () {
