@@ -1,4 +1,4 @@
-/* ===== HEADER ESTILO WIKIPEDIA ===== */
+/* ===== HEADER — Barra superior fija con logo y navegación ===== */
 .wiki-header {
   background-color: #ffffff;
   border-bottom: 1px solid #a2a9b1;
@@ -57,7 +57,7 @@
   background-color: #eaecf0;
 }
 
-/* Responsive header */
+/* HEADER — Responsive (mobile) */
 @media (max-width: 768px) {
   .wiki-header-container {
     flex-direction: column;
@@ -74,6 +74,7 @@
   }
 }
 
+/* ===== CONTENEDOR PRINCIPAL — Limita el ancho y centra el contenido ===== */
 .wiki-container {
   max-width: 960px;
   margin: 0 auto;
@@ -85,7 +86,7 @@
   background-color: #ffffff;
 }
 
-/* Título principal */
+/* ===== TÍTULO PRINCIPAL DE LA PÁGINA ===== */
 .wiki-title {
   font-size: 28px;
   font-weight: normal;
@@ -95,7 +96,7 @@
   font-family: "Linux Libertine", "Georgia", "Times", serif;
 }
 
-/* Infobox (ficha lateral) */
+/* ===== INFOBOX — Ficha lateral derecha con datos personales/profesionales ===== */
 .wiki-infobox {
   float: right;
   clear: right;
@@ -154,7 +155,7 @@
   font-weight: bold;
 }
 
-/* Contenido principal */
+/* ===== CONTENIDO PRINCIPAL — Área de texto con secciones y artículos ===== */
 .wiki-content {
   overflow: hidden;
 }
@@ -176,7 +177,7 @@
   color: #0b0080;
 }
 
-/* Enlaces externos */
+/* ===== ENLACES EXTERNOS — Icono decorativo que se añade tras los enlaces salientes ===== */
 .wiki-external::after {
   content: "";
   display: inline-block;
@@ -187,7 +188,7 @@
   background-size: contain;
 }
 
-/* Tabla de contenidos */
+/* ===== TABLA DE CONTENIDOS — Índice de secciones del artículo ===== */
 .wiki-toc {
   display: inline-block;
   background-color: #f8f9fa;
@@ -226,7 +227,7 @@
   text-decoration: underline;
 }
 
-/* Títulos de sección */
+/* ===== TÍTULOS DE SECCIÓN — H2 con línea divisoria inferior ===== */
 .wiki-section-title {
   font-size: 19px;
   font-weight: normal;
@@ -250,7 +251,7 @@
   font-family: "Linux Libertine", "Georgia", "Times", serif;
 }
 
-/* Listas */
+/* ===== LISTAS — Listas dentro del contenido del artículo ===== */
 .wiki-content ul {
   margin: 0.3em 0 0 1.6em;
   padding: 0;
@@ -260,7 +261,7 @@
   margin-bottom: 0.2em;
 }
 
-/* Categorías */
+/* ===== CATEGORÍAS — Barra inferior con las etiquetas del artículo ===== */
 .wiki-categories {
   clear: both;
   margin-top: 30px;
@@ -289,12 +290,12 @@
   color: #72777d;
 }
 
-/* Ubicación/lugar */
+/* ===== TEXTO SECUNDARIO — Color gris para ubicaciones y captions ===== */
 .wiki-location {
   color: #54595d;
 }
 
-/* Responsive */
+/* ===== RESPONSIVE — Ajustes para pantallas pequeñas (mobile) ===== */
 @media (max-width: 768px) {
   .wiki-infobox {
     float: none;

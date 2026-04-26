@@ -18,6 +18,8 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 // About me
 Route::get('/about-me', [AboutMeController::class, 'index'])->name('about-me');
 
+//Game
+
 
 
 Route::get('/dashboard', function () {
