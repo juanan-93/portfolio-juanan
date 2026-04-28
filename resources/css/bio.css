@@ -1,0 +1,74 @@
+/* ====================================================================
+   BIO - Layout principal
+   ==================================================================== */
+.bio-section {
+    @apply space-y-8;
+}
+
+.bio-form {
+    @apply space-y-8;
+}
+
+/* ====================================================================
+   BIO - Cabecera de la vista
+   ==================================================================== */
+.bio-title {
+    @apply text-2xl font-semibold text-gray-900;
+}
+
+.bio-description {
+    @apply mt-1 text-sm text-gray-600;
+}
+
+/* ====================================================================
+   BIO - Cards y textos de seccion
+   ==================================================================== */
+.bio-card {
+    @apply rounded-md border border-gray-200 bg-white p-6 shadow-sm;
+}
+
+.bio-card-header {
+    @apply mb-6;
+}
+
+.bio-card-title {
+    @apply text-lg font-medium text-gray-900;
+}
+
+.bio-card-description {
+    @apply mt-1 text-sm text-gray-600;
+}
+
+/* ====================================================================
+   BIO - Rejillas de campos
+   ==================================================================== */
+.bio-grid {
+    @apply grid gap-6;
+}
+
+.bio-grid--three {
+    @apply md:grid-cols-3;
+}
+
+.bio-grid--three-large {
+    @apply lg:grid-cols-3;
+}
+
+.bio-grid--details {
+    @apply md:grid-cols-2 xl:grid-cols-3;
+}
+
+/* ====================================================================
+   BIO - Campos de formulario
+   ==================================================================== */
+.bio-field {
+    @apply mt-1 block w-full;
+}
+
+.bio-textarea {
+    @apply mt-1 block min-h-32 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+}
+
+.bio-file-input {
+    @apply mt-1 block w-full text-sm text-gray-700 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100;
+}

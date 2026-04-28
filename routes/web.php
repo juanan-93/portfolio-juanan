@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\LandingController; 
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AboutMeController;
 use App\Http\Controllers\GameController;
-USE App\Http\Controllers\MyProjectsController;
+use App\Http\Controllers\MyProjectsController;
 
 
 
@@ -42,9 +41,9 @@ Route::post('/game/scores', [GameController::class, 'store'])->name('game.scores
 Route::get('/projects', [MyProjectsController::class, 'index'])->name('projects');
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminPanelController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 
 // Rutas protegidas por autenticación
