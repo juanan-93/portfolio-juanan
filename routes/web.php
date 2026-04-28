@@ -8,8 +8,12 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AboutMeController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MyProjectsController;
+use App\Http\Controllers\LanguageController;
 
-
+// ====================================================================
+// LANGUAGE SWITCHER
+// ====================================================================
+Route::post('/language', [LanguageController::class, 'switch'])->name('language.switch');
 
 // ====================================================================
 // LANDING
@@ -52,6 +56,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
 
 
 

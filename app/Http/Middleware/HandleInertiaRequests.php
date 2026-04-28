@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -34,6 +35,21 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'locale' => App::getLocale(),
+            'availableLocales' => config('app.available_locales'),
+            'translations' => $this->getTranslations(),
         ];
+    }
+
+    private function getTranslations(): array
+    {
+        $locale = App::getLocale();
+        $path = lang_path("{$locale}.json");
+
+        if (! file_exists($path)) {
+            return [];
+        }
+
+        return json_decode(file_get_contents($path), true) ?? [];
     }
 }
