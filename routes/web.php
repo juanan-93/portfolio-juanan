@@ -44,11 +44,11 @@ Route::post('/game/scores', [GameController::class, 'store'])->name('game.scores
 // ====================================================================
 Route::get('/projects', [MyProjectsController::class, 'index'])->name('projects');
 
-
-Route::get('/dashboard', [AdminPanelController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
+// ====================================================================
+// ADMIN PANEL
+// ====================================================================
+Route::get('/dashboard', [AdminPanelController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/admin/bio', [AdminPanelController::class, 'storeBio'])->name('bio.store');
 
 // Rutas protegidas por autenticación
 Route::middleware('auth')->group(function () {

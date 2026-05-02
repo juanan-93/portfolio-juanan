@@ -10,20 +10,28 @@ return new class extends Migration
     {
         Schema::create('bios', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->text('bio');
-            $table->text('professional_career');
-            $table->text('beginnings');
-            $table->text('present');
-            $table->text('technical_skills');
-            $table->text('education');
+
+            // Campos multiidioma (JSON)
+            $table->json('title');
+            $table->json('bio');
+            $table->json('professional_career');
+            $table->json('technical_skills');
+            $table->json('projects');
+            $table->json('education');
+            $table->json('external_links');
+            $table->json('nationality');
+            $table->json('occupation');
+            $table->json('employer');
+
+            // Campos simples
             $table->string('img')->nullable();
             $table->date('birthdate')->nullable();
+
+            // Años activo
             $table->integer('years_active_from')->nullable();
             $table->integer('years_active_to')->nullable();
             $table->boolean('years_active_current')->default(false);
-            $table->string('employer')->nullable();
+
             $table->timestamps();
         });
     }

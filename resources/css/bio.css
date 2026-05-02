@@ -72,3 +72,31 @@
 .bio-file-input {
     @apply mt-1 block w-full text-sm text-gray-700 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100;
 }
+/* ====================================================================
+   BIO - Checkbox
+   ==================================================================== */
+.bio-checkbox-wrapper {
+    @apply flex items-center gap-3 pt-6;
+}
+
+.bio-checkbox {
+    @apply h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500;
+}
+
+/* ====================================================================
+   BIO - Errores de validación
+   ==================================================================== */
+.bio-error {
+    @apply mt-1 text-sm text-red-600;
+}
+
+/* ====================================================================
+   BIO - Botón de submit
+   ==================================================================== */
+.bio-actions {
+    @apply flex justify-end;
+}
+
+.bio-submit-btn {
+    @apply rounded-md bg-indigo-600 px-6 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50;
+}
