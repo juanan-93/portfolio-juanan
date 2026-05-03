@@ -40,7 +40,7 @@ class Bio extends Model
         'employer'            => 'array',
 
         // Otros tipos
-        'birthdate'            => 'date',
+        'birthdate'            => 'date:Y-m-d',
         'years_active_from'    => 'integer',
         'years_active_to'      => 'integer',
         'years_active_current' => 'boolean',

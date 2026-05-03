@@ -48,7 +48,10 @@ Route::get('/projects', [MyProjectsController::class, 'index'])->name('projects'
 // ADMIN PANEL
 // ====================================================================
 Route::get('/dashboard', [AdminPanelController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Ruta para crear
 Route::post('/admin/bio', [AdminPanelController::class, 'storeBio'])->name('bio.store');
+// Ruta nueva para actualizar
+Route::put('/admin/bio/{bio}', [AdminPanelController::class, 'updateBio'])->name('bio.update');
 
 // Rutas protegidas por autenticación
 Route::middleware('auth')->group(function () {

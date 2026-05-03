@@ -2,6 +2,7 @@ import '../../../css/bio.css';
 import { useForm } from '@inertiajs/react';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import Swal from 'sweetalert2';
 
 
 // ─── Idiomas disponibles ───────────────────────────────────────────────────────
@@ -49,35 +50,60 @@ const textareaGroups = [
 ];
 
 
-export default function Bio() {
+export default function Bio({ bio }) {
 
-    const { data, setData, post, processing, errors } = useForm({
-        // Campos multiidioma
-        title:               { en: '', es: '', ca: '' },
-        bio:                 { en: '', es: '', ca: '' },
-        professional_career: { en: '', es: '', ca: '' },
-        technical_skills:    { en: '', es: '', ca: '' },
-        projects:            { en: '', es: '', ca: '' },
-        education:           { en: '', es: '', ca: '' },
-        external_links:      { en: '', es: '', ca: '' },
-        nationality:         { en: '', es: '', ca: '' },
-        occupation:          { en: '', es: '', ca: '' },
-        employer:            { en: '', es: '', ca: '' },
+    const isEditing = bio !== null && bio !== undefined;
 
-        // Campos simples
+    const { data, setData, post, put, processing, errors } = useForm({
+        // Si hay bio usamos sus valores, si no usamos cadenas vacías
+        title:               bio?.title               ?? { en: '', es: '', ca: '' },
+        bio:                 bio?.bio                 ?? { en: '', es: '', ca: '' },
+        professional_career: bio?.professional_career  ?? { en: '', es: '', ca: '' },
+        technical_skills:    bio?.technical_skills     ?? { en: '', es: '', ca: '' },
+        projects:            bio?.projects             ?? { en: '', es: '', ca: '' },
+        education:           bio?.education            ?? { en: '', es: '', ca: '' },
+        external_links:      bio?.external_links       ?? { en: '', es: '', ca: '' },
+        nationality:         bio?.nationality          ?? { en: '', es: '', ca: '' },
+        occupation:          bio?.occupation           ?? { en: '', es: '', ca: '' },
+        employer:            bio?.employer             ?? { en: '', es: '', ca: '' },
         img:                  null,
-        birthdate:            '',
-        years_active_from:    '',
-        years_active_to:      '',
-        years_active_current: false,
+        birthdate:            bio?.birthdate            ?? '',
+        years_active_from:    bio?.years_active_from    ?? '',
+        years_active_to:      bio?.years_active_to      ?? '',
+        years_active_current: bio?.years_active_current ?? false,
     });
 
 
     function handleSubmit(e) {
         e.preventDefault();
-        post(route('bio.store'), {
-            forceFormData: true,
-        });
+
+        if (isEditing) {
+            put(route('bio.update', bio.id), {
+                forceFormData: true,
+                onSuccess: () => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Actualizado!',
+                        text: 'La bio se ha actualizado correctamente.',
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                },
+            });
+        } else {
+            post(route('bio.store'), {
+                forceFormData: true,
+                onSuccess: () => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Guardado!',
+                        text: 'La bio se ha guardado correctamente.',
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                },
+            });
+        }
     }
 
 
@@ -366,7 +392,11 @@ export default function Bio() {
                         className="bio-submit-btn"
                         disabled={processing}
                     >
-                        {processing ? 'Guardando...' : 'Guardar'}
+                        {/* El texto del botón cambia según el modo */}
+                        {processing
+                            ? isEditing ? 'Actualizando...' : 'Guardando...'
+                            : isEditing ? 'Actualizar' : 'Guardar'
+                        }
                     </button>
                 </div>
 
