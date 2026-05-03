@@ -27,6 +27,7 @@ Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 
+
 // ====================================================================
 // ABOUT ME
 // ====================================================================

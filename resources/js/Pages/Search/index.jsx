@@ -4,7 +4,7 @@ import LanguageSwitcher from "@/Components/LanguageSwitcher";
 
 
 export default function Index() {
-    const { auth, translations = {}, locale } = usePage().props;
+    const { auth, translations = {}, locale, bio } = usePage().props;
     const avatarHref = auth.user ? route("dashboard") : route("login");
     const t = (key, fallback) => translations[key] ?? fallback;
 
