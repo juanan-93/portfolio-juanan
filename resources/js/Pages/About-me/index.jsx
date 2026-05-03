@@ -1,22 +1,25 @@
 import "../../../css/about-me.css";
 import { usePage } from "@inertiajs/react";
-import { useTranslation } from "@/hooks/useTranslation";
-
 
 export default function Index() {
   const { bio, locale } = usePage().props;
-  const { t } = useTranslation();
 
-  // Helper: obtiene el texto en el idioma activo de un campo multiidioma
-  const loc = (field) => field?.[locale] ?? field?.es ?? "";
+  // Devuelve el texto en el idioma activo de un campo multiidioma {en, es, ca}
+  const loc = (field) => field?.[locale] ?? field?.es ?? field?.en ?? "";
 
   // Años activo
   const yearsActive = bio
-    ? `${bio.years_active_from ?? ""}${bio.years_active_current ? "-presente" : bio.years_active_to ? `-${bio.years_active_to}` : ""}`
+    ? `${bio.years_active_from ?? ""}${
+        bio.years_active_current
+          ? "-presente"
+          : bio.years_active_to
+          ? `-${bio.years_active_to}`
+          : ""
+      }`
     : "";
 
-  // Foto de perfil
-  const imgSrc = bio?.img ? `/storage/${bio.img}` : "/img/tu-foto.jpg";
+  // Imagen de perfil
+  const imgSrc = bio?.img ? `/storage/${bio.img}` : null;
 
   return (
     <>
@@ -50,46 +53,40 @@ export default function Index() {
                     {loc(bio?.title)}
                 </th>
                 </tr>
-                <tr>
-                <td colSpan={2} className="infobox-image">
-                    <img src={imgSrc} alt={loc(bio?.title)} />
-                </td>
-                </tr>
-                <tr>
-                <th>{t("about.personal_info", "Información personal")}</th>
-                <td></td>
-                </tr>
+                {imgSrc && (
+                  <tr>
+                    <td colSpan={2} className="infobox-image">
+                        <img src={imgSrc} alt={loc(bio?.title)} />
+                    </td>
+                  </tr>
+                )}
                 {bio?.birthdate && (
                   <tr>
-                    <th>{t("about.birthdate", "Nacimiento")}</th>
+                    <th>Nacimiento</th>
                     <td>{bio.birthdate}</td>
                   </tr>
                 )}
                 {bio?.nationality && (
                   <tr>
-                    <th>{t("about.nationality", "Nacionalidad")}</th>
+                    <th>Nacionalidad</th>
                     <td>{loc(bio.nationality)}</td>
                   </tr>
                 )}
-                <tr>
-                <th>{t("about.professional_info", "Información profesional")}</th>
-                <td></td>
-                </tr>
                 {bio?.occupation && (
                   <tr>
-                    <th>{t("about.occupation", "Ocupación")}</th>
+                    <th>Ocupación</th>
                     <td>{loc(bio.occupation)}</td>
                   </tr>
                 )}
                 {yearsActive && (
                   <tr>
-                    <th>{t("about.years_active", "Años activo")}</th>
+                    <th>Años activo</th>
                     <td>{yearsActive}</td>
                   </tr>
                 )}
                 {bio?.employer && (
                   <tr>
-                    <th>{t("about.employer", "Empleador")}</th>
+                    <th>Empleador</th>
                     <td>{loc(bio.employer)}</td>
                   </tr>
                 )}
@@ -101,84 +98,52 @@ export default function Index() {
 
             {/* TABLA DE CONTENIDOS — Índice de secciones */}
             <div className="wiki-toc">
-                <div className="toc-title">{t("about.toc", "Índice")}</div>
+                <div className="toc-title">Índice</div>
                 <ul>
-                <li>
-                    <a href="#biografia">1 {t("about.biography", "Biografía")}</a>
-                </li>
-                <li>
-                    <a href="#trayectoria">2 {t("about.career", "Trayectoria profesional")}</a>
-                </li>
-                <li>
-                    <a href="#habilidades">3 {t("about.skills", "Habilidades técnicas")}</a>
-                </li>
-                <li>
-                    <a href="#proyectos">4 {t("about.projects", "Proyectos destacados")}</a>
-                </li>
-                <li>
-                    <a href="#educacion">5 {t("about.education", "Educación")}</a>
-                </li>
-                <li>
-                    <a href="#enlaces">6 {t("about.links", "Enlaces externos")}</a>
-                </li>
+                <li><a href="#biografia">1 Biografía</a></li>
+                <li><a href="#trayectoria">2 Trayectoria profesional</a></li>
+                <li><a href="#habilidades">3 Habilidades técnicas</a></li>
+                <li><a href="#proyectos">4 Proyectos destacados</a></li>
+                <li><a href="#educacion">5 Educación</a></li>
+                <li><a href="#enlaces">6 Enlaces externos</a></li>
                 </ul>
             </div>
 
-            {/* ===== SECCIONES DEL ARTÍCULO ===== */}
-
             {/* SECCIÓN: Biografía */}
             <h2 id="biografia" className="wiki-section-title">
-                <span>{t("about.biography", "Biografía")}</span>
+                <span>Biografía</span>
             </h2>
-            <div
-                className="wiki-rich-content"
-                dangerouslySetInnerHTML={{ __html: loc(bio?.bio) }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: loc(bio?.bio) }} />
 
             {/* SECCIÓN: Trayectoria profesional */}
             <h2 id="trayectoria" className="wiki-section-title">
-                <span>{t("about.career", "Trayectoria profesional")}</span>
+                <span>Trayectoria profesional</span>
             </h2>
-            <div
-                className="wiki-rich-content"
-                dangerouslySetInnerHTML={{ __html: loc(bio?.professional_career) }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: loc(bio?.professional_career) }} />
 
             {/* SECCIÓN: Habilidades técnicas */}
             <h2 id="habilidades" className="wiki-section-title">
-                <span>{t("about.skills", "Habilidades técnicas")}</span>
+                <span>Habilidades técnicas</span>
             </h2>
-            <div
-                className="wiki-rich-content"
-                dangerouslySetInnerHTML={{ __html: loc(bio?.technical_skills) }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: loc(bio?.technical_skills) }} />
 
             {/* SECCIÓN: Proyectos destacados */}
             <h2 id="proyectos" className="wiki-section-title">
-                <span>{t("about.projects", "Proyectos destacados")}</span>
+                <span>Proyectos destacados</span>
             </h2>
-            <div
-                className="wiki-rich-content"
-                dangerouslySetInnerHTML={{ __html: loc(bio?.projects) }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: loc(bio?.projects) }} />
 
             {/* SECCIÓN: Educación */}
             <h2 id="educacion" className="wiki-section-title">
-                <span>{t("about.education", "Educación")}</span>
+                <span>Educación</span>
             </h2>
-            <div
-                className="wiki-rich-content"
-                dangerouslySetInnerHTML={{ __html: loc(bio?.education) }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: loc(bio?.education) }} />
 
             {/* SECCIÓN: Enlaces externos */}
             <h2 id="enlaces" className="wiki-section-title">
-                <span>{t("about.links", "Enlaces externos")}</span>
+                <span>Enlaces externos</span>
             </h2>
-            <div
-                className="wiki-rich-content"
-                dangerouslySetInnerHTML={{ __html: loc(bio?.external_links) }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: loc(bio?.external_links) }} />
 
             </div>
         </div>
