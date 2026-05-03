@@ -3,6 +3,8 @@ import { useForm } from '@inertiajs/react';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import Swal from 'sweetalert2';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 
 // ─── Idiomas disponibles ───────────────────────────────────────────────────────
