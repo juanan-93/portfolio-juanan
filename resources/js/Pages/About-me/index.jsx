@@ -1,5 +1,7 @@
 import "../../../css/about-me.css";
 import { usePage } from "@inertiajs/react";
+import LanguageSwitcher from "@/Components/LanguageSwitcher";
+
 
 export default function Index() {
   const { bio, locale } = usePage().props;
@@ -31,11 +33,7 @@ export default function Index() {
                     <img src="/img/logos/juananpedia.png" alt="Logo" />
                 </a>
                 <div className="wiki-header-right">
-                    <nav className="wiki-nav">
-                    <a href="/">Inicio</a>
-                    <a href="/search">Buscar</a>
-                    <a href="/about-me" className="active">Sobre mí</a>
-                    </nav>
+                    <LanguageSwitcher />
                 </div>
             </div>
         </header>

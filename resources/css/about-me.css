@@ -27,34 +27,27 @@
   width: auto;
 }
 
-.wiki-header-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+/* ===== LANGUAGE SWITCHER — Estilos para la vista about-me ===== */
+.wiki-header .language-switcher .lang-btn {
+    color: #0645ad;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.wiki-nav {
-  display: flex;
-  gap: 15px;
+.wiki-header .language-switcher .lang-btn:hover {
+    background-color: #eaecf0;
+    text-decoration: underline;
 }
 
-.wiki-nav a {
-  color: #0645ad;
-  text-decoration: none;
-  font-size: 14px;
-  padding: 5px 10px;
-  border-radius: 3px;
-  transition: background-color 0.2s;
-}
-
-.wiki-nav a:hover {
-  background-color: #eaecf0;
-  text-decoration: underline;
-}
-
-.wiki-nav a.active {
-  font-weight: bold;
-  background-color: #eaecf0;
+.wiki-header .language-switcher .lang-btn.active {
+    font-weight: bold;
+    background-color: #eaecf0;
 }
 
 /* HEADER — Responsive (mobile) */

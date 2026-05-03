@@ -1,0 +1,107 @@
+/* ====================================================================
+   PROJECTS - Layout principal
+   ==================================================================== */
+.projects-section {
+    @apply space-y-8;
+}
+
+/* ====================================================================
+   PROJECTS - Cabecera de la vista
+   ==================================================================== */
+.projects-header {
+    @apply mb-6;
+}
+
+.projects-title {
+    @apply text-2xl font-semibold text-gray-900;
+}
+
+.projects-description {
+    @apply mt-1 text-sm text-gray-600;
+}
+
+/* ====================================================================
+   PROJECTS - Card contenedora de la tabla
+   ==================================================================== */
+.projects-card {
+    @apply rounded-md border border-gray-200 bg-white p-6 shadow-sm;
+}
+
+.projects-card-header {
+    @apply mb-6 flex items-center justify-between;
+}
+
+.projects-card-title {
+    @apply text-lg font-medium text-gray-900;
+}
+
+.projects-card-description {
+    @apply mt-1 text-sm text-gray-600;
+}
+
+/* ====================================================================
+   PROJECTS - Botón de añadir nuevo proyecto
+   ==================================================================== */
+.projects-add-btn {
+    @apply rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+/* ====================================================================
+   PROJECTS - Tabla
+   ==================================================================== */
+.projects-table-wrapper {
+    @apply overflow-x-auto;
+}
+
+.projects-table {
+    @apply w-full text-sm text-left text-gray-700;
+}
+
+.projects-table thead {
+    @apply bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+.projects-table thead th {
+    @apply px-6 py-3 border-b border-gray-200;
+}
+
+.projects-table tbody tr {
+    @apply border-b border-gray-100 hover:bg-gray-50 transition-colors;
+}
+
+.projects-table tbody td {
+    @apply px-6 py-4 align-top;
+}
+
+/* ====================================================================
+   PROJECTS - Celdas específicas
+   ==================================================================== */
+.projects-table-title {
+    @apply font-medium text-gray-900;
+}
+
+.projects-table-description {
+    @apply text-gray-500 text-sm leading-relaxed max-w-sm;
+}
+
+/* ====================================================================
+   PROJECTS - Botones de acción
+   ==================================================================== */
+.projects-actions {
+    @apply flex items-center gap-2;
+}
+
+.projects-btn-edit {
+    @apply inline-flex items-center rounded-md bg-indigo-50 px-3 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 transition-colors;
+}
+
+.projects-btn-delete {
+    @apply inline-flex items-center rounded-md bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 transition-colors;
+}
+
+/* ====================================================================
+   PROJECTS - Estado vacío (sin proyectos)
+   ==================================================================== */
+.projects-empty {
+    @apply py-12 text-center text-sm text-gray-500;
+}

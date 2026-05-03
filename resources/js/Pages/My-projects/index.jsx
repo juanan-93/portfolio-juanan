@@ -1,5 +1,7 @@
 import "../../../css/my-projects.css";
+import { useState } from 'react';
 import { Head, Link } from "@inertiajs/react";
+import RetroProjectModal from '@/Components/modal_projects';
 
 const NAV_ITEMS = [
 	["🏠", "Inicio", "/"],
@@ -96,9 +98,17 @@ const STARS = [
 ];
 
 export default function Index() {
+
+	const [selectedProject, setSelectedProject] = useState(null);
+
     return (
 		<>
 			<Head title="~*~ Mis Trabajos de Programacion ~*~" />
+
+			<RetroProjectModal
+				project={selectedProject}
+				onClose={() => setSelectedProject(null)}
+			/>
 
 			<div className="retro-page">
 				<div className="retro-stars" aria-hidden="true">
@@ -192,7 +202,7 @@ export default function Index() {
 
 						<div className="retro-project-list">
 							{PROJECTS.map((project) => (
-								<article key={project.id} className="retro-project-card" style={{ "--project-color": "#00ffff" }}>
+								<article key={project.id} className="retro-project-card" style={{ "--project-color": "#00ffff", cursor: 'pointer' }} onClick={() => setSelectedProject(project)}>
 									<div className="retro-project-titlebar">
 										<span className="retro-project-titlebar-text">{project.title}</span>
 										<div className="retro-project-controls" aria-hidden="true">
