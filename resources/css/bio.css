@@ -100,3 +100,22 @@
 .bio-submit-btn {
     @apply rounded-md bg-indigo-600 px-6 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50;
 }
+
+.bio-image-preview {
+    margin-bottom: 8px;
+}
+
+.bio-image-thumb {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.bio-image-caption {
+    font-size: 12px;
+    color: #6b7280;
+}

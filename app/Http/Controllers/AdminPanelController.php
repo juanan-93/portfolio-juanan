@@ -85,6 +85,10 @@ class AdminPanelController extends Controller
         // PASO 2: Si viene una imagen, guardarla en storage/app/public/bio
         if ($request->hasFile('img')) {
             $validated['img'] = $request->file('img')->store('bio', 'public');
+        } else {
+            // Eliminamos img de los datos validados para que update()
+            // no sobreescriba la imagen existente con null
+            unset($validated['img']);
         }
 
         // PASO 3: Guardar en la base de datos
@@ -162,6 +166,10 @@ class AdminPanelController extends Controller
         // Si viene una imagen nueva la guardamos
         if ($request->hasFile('img')) {
             $validated['img'] = $request->file('img')->store('bio', 'public');
+        } else {
+            // Eliminamos img de los datos validados para que update()
+            // no sobreescriba la imagen existente con null
+            unset($validated['img']);
         }
 
         // update() modifica el registro existente en vez de crear uno nuevo

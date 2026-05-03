@@ -14,9 +14,17 @@ const languages = [
     { id: 'ca', label: 'Catalán' },
 ];
 
+// ─── Configuración de la barra de herramientas de Quill ───────────────────────
+const quillToolbar = [
+    [{ header: [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['link'],
+    ['clean'],
+];
 
-// ─── Grupos de textarea multiidioma ───────────────────────────────────────────
-// Cada objeto representa una card completa con sus textareas por idioma.
+// ─── Grupos de campos largos con editor Quill ─────────────────────────────────
+// Cada objeto representa una card completa con sus editores por idioma.
 // Al añadir aquí un nuevo grupo, aparece automáticamente en el formulario.
 const textareaGroups = [
     {
@@ -110,7 +118,6 @@ export default function Bio({ bio }) {
 
 
     // Actualiza un campo multiidioma conservando los otros idiomas intactos.
-    // Es como hacer: data.title.es = 'nuevo valor' pero de forma inmutable.
     function handleMultilang(field, lang, value) {
         setData(field, {
             ...data[field],
@@ -122,7 +129,6 @@ export default function Bio({ bio }) {
     return (
         <section className="bio-section">
 
-
             {/* ── Cabecera ────────────────────────────────────────────────── */}
             <div className="bio-header">
                 <h1 className="bio-title">Sobre mí</h1>
@@ -133,7 +139,6 @@ export default function Bio({ bio }) {
 
 
             <form className="bio-form" onSubmit={handleSubmit}>
-
 
                 {/* ── TÍTULOS ─────────────────────────────────────────────── */}
                 <div className="bio-card">
@@ -168,7 +173,7 @@ export default function Bio({ bio }) {
                 </div>
 
 
-                {/* ── NATIONALITY + OCCUPATION (inputs simples multiidioma) ── */}
+                {/* ── NATIONALITY + OCCUPATION ────────────────────────────── */}
                 <div className="bio-card">
                     <div className="bio-card-header">
                         <h2 className="bio-card-title">Identidad profesional</h2>
@@ -199,7 +204,6 @@ export default function Bio({ bio }) {
                         ))}
                     </div>
 
-                    {/* Separador visual entre nationality y occupation */}
                     <div className="bio-grid bio-grid--three mt-6">
                         {languages.map((language) => (
                             <div key={`occupation-${language.id}`}>
@@ -224,8 +228,8 @@ export default function Bio({ bio }) {
                 </div>
 
 
-                {/* ── TEXTAREAS MULTIIDIOMA (bio, trayectoria, skills...) ── */}
-                {/* Recorre textareaGroups y genera una card por cada sección */}
+                {/* ── CAMPOS LARGOS CON EDITOR QUILL ──────────────────────── */}
+                {/* Recorre textareaGroups y genera una card con editor Quill por cada sección */}
                 {textareaGroups.map((group) => (
                     <div key={group.id} className="bio-card">
                         <div className="bio-card-header">
@@ -240,13 +244,14 @@ export default function Bio({ bio }) {
                                         htmlFor={`${group.id}_${language.id}`}
                                         value={`${group.title} - ${language.label}`}
                                     />
-                                    <textarea
-                                        id={`${group.id}_${language.id}`}
-                                        name={`${group.id}_${language.id}`}
-                                        className="bio-textarea"
-                                        placeholder={`${group.title} en ${language.label.toLowerCase()}`}
+                                    {/* ReactQuill sustituye al TextInput en campos largos */}
+                                    {/* onChange recibe el valor directamente, no un evento */}
+                                    <ReactQuill
+                                        theme="snow"
                                         value={data[group.id][language.id]}
-                                        onChange={(e) => handleMultilang(group.id, language.id, e.target.value)}
+                                        onChange={(value) => handleMultilang(group.id, language.id, value)}
+                                        placeholder={`${group.title} en ${language.label.toLowerCase()}`}
+                                        modules={{ toolbar: quillToolbar }}
                                     />
                                     {errors[`${group.id}.${language.id}`] && (
                                         <p className="bio-error">{errors[`${group.id}.${language.id}`]}</p>
@@ -258,7 +263,7 @@ export default function Bio({ bio }) {
                 ))}
 
 
-                {/* ── EMPLOYER multiidioma ─────────────────────────────────── */}
+                {/* ── EMPLOYER ────────────────────────────────────────────── */}
                 <div className="bio-card">
                     <div className="bio-card-header">
                         <h2 className="bio-card-title">Empleador</h2>
@@ -302,10 +307,21 @@ export default function Bio({ bio }) {
 
                     <div className="bio-grid bio-grid--details">
 
-                        {/* Imagen */}
                         <div>
                             <InputLabel htmlFor="img" value="Imagen" />
-                            {/* type="file" requiere e.target.files[0], no e.target.value */}
+
+                            {/* Si ya existe una imagen la mostramos como vista previa */}
+                            {isEditing && bio?.img && (
+                                <div className="bio-image-preview">
+                                    <img
+                                        src={`/storage/${bio.img}`}
+                                        alt="Imagen actual"
+                                        className="bio-image-thumb"
+                                    />
+                                    <p className="bio-image-caption">Imagen actual. Selecciona una nueva para reemplazarla.</p>
+                                </div>
+                            )}
+
                             <input
                                 id="img"
                                 name="img"
@@ -317,7 +333,6 @@ export default function Bio({ bio }) {
                             {errors.img && <p className="bio-error">{errors.img}</p>}
                         </div>
 
-                        {/* Fecha de nacimiento */}
                         <div>
                             <InputLabel htmlFor="birthdate" value="Fecha de nacimiento" />
                             <TextInput
@@ -331,10 +346,8 @@ export default function Bio({ bio }) {
                             {errors.birthdate && <p className="bio-error">{errors.birthdate}</p>}
                         </div>
 
-                        {/* Activo desde */}
                         <div>
                             <InputLabel htmlFor="years_active_from" value="Activo desde (año)" />
-                            {/* Es un año, no una fecha completa → type="number" */}
                             <TextInput
                                 id="years_active_from"
                                 name="years_active_from"
@@ -349,7 +362,6 @@ export default function Bio({ bio }) {
                             {errors.years_active_from && <p className="bio-error">{errors.years_active_from}</p>}
                         </div>
 
-                        {/* Activo hasta */}
                         <div>
                             <InputLabel htmlFor="years_active_to" value="Activo hasta (año)" />
                             <TextInput
@@ -366,7 +378,6 @@ export default function Bio({ bio }) {
                             {errors.years_active_to && <p className="bio-error">{errors.years_active_to}</p>}
                         </div>
 
-                        {/* Activo actualmente (checkbox) */}
                         <div className="bio-checkbox-wrapper">
                             {/* El checkbox usa checked en vez de value */}
                             <input
@@ -394,14 +405,12 @@ export default function Bio({ bio }) {
                         className="bio-submit-btn"
                         disabled={processing}
                     >
-                        {/* El texto del botón cambia según el modo */}
                         {processing
                             ? isEditing ? 'Actualizando...' : 'Guardando...'
                             : isEditing ? 'Actualizar' : 'Guardar'
                         }
                     </button>
                 </div>
-
 
             </form>
         </section>
