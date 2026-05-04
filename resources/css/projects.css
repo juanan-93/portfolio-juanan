@@ -140,3 +140,12 @@
     @apply py-12 text-center text-sm text-gray-500;
 }
 
+/* ====================================================================
+   PROJECTS - DataTables layout fixes
+   ==================================================================== */
+
+.projects-table-wrapper .dt-length select {
+    min-width: 50px;
+
+}
+
