@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bio;        // Importamos el modelo Bio para poder usarlo
-use Illuminate\Http\Request; // Importamos Request para recibir los datos del formulario
+use App\Models\Bio;
+use App\Models\Project;
+use Illuminate\Http\Request; 
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -177,4 +178,57 @@ class AdminPanelController extends Controller
 
         return redirect()->route('dashboard')->with('success', '¡Bio actualizada!');
     }
+
+    // MÉTODO PARA GUARDAR PROYECTOS
+    public function storeProject(Request $request)
+    {
+        // PASO 1: Validar los datos
+        $validated = $request->validate([
+            // Títulos multiidioma
+            'title'          => 'required|array',
+            'title.en'       => 'required|string|max:255',
+            'title.es'       => 'required|string|max:255',
+            'title.ca'       => 'required|string|max:255',
+
+            // Descripción 1 multiidioma
+            'description1'      => 'required|array',
+            'description1.en'   => 'required|string',
+            'description1.es'   => 'required|string',
+            'description1.ca'   => 'required|string',
+
+            // Descripción 2 multiidioma
+            'description2'      => 'nullable|array',
+            'description2.en'   => 'nullable|string',
+            'description2.es'   => 'nullable|string',
+            'description2.ca'   => 'nullable|string',
+
+            // Tecnologías — array de strings
+            'technologies'   => 'nullable|array',
+            'technologies.*' => 'nullable|string',
+
+            // Imágenes — hasta 5 archivos
+            'images'         => 'nullable|array|max:5',
+            'images.*'       => 'nullable|image|max:2048',
+        ]);
+
+        // PASO 2: Procesar las imágenes si vienen
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                if ($image) {
+                    $imagePaths[] = $image->store('projects', 'public');
+                }
+            }
+            $validated['images'] = $imagePaths;
+        }
+
+        // PASO 3: Guardar en la base de datos
+        Project::create($validated);
+
+        // PASO 4: Volver al dashboard con mensaje de éxito
+        return redirect()->route('dashboard')->with('success', '¡Proyecto guardado!');
+    }
+
+
+
 }

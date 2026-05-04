@@ -1,4 +1,9 @@
 import '../../css/create_modal_projects.css';
+import { useState, useForm } from 'react';
+import ReactQuill from 'react-quill-new';
+import Swal from 'sweetalert2';
+import 'react-quill-new/dist/quill.snow.css';
+import Select from 'react-select';
 
 const LANGUAGES = [
     { id: 'en', label: 'Inglés' },
@@ -7,13 +12,51 @@ const LANGUAGES = [
 ];
 
 const TECHNOLOGIES = [
-    'Laravel', 'React', 'Inertia.js', 'Vue.js', 'Node.js',
-    'MySQL', 'PostgreSQL', 'MongoDB', 'Docker', 'Git',
-    'Tailwind CSS', 'TypeScript', 'JavaScript', 'PHP',
-    'API REST', 'GraphQL', 'Redis', 'AWS', 'CI/CD',
+    { value: 'Laravel', label: 'Laravel' },
+    { value: 'React', label: 'React' },
+    { value: 'Inertia.js', label: 'Inertia.js' },
+    { value: 'Vue.js', label: 'Vue.js' },
+    { value: 'Node.js', label: 'Node.js' },
+    { value: 'MySQL', label: 'MySQL' },
+    { value: 'PostgreSQL', label: 'PostgreSQL' },
+    { value: 'MongoDB', label: 'MongoDB' },
+    { value: 'Docker', label: 'Docker' },
+    { value: 'Git', label: 'Git' },
+    { value: 'Tailwind CSS', label: 'Tailwind CSS' },
+    { value: 'TypeScript', label: 'TypeScript' },
+    { value: 'JavaScript', label: 'JavaScript' },
+    { value: 'PHP', label: 'PHP' },
+    { value: 'API REST', label: 'API REST' },
+    { value: 'GraphQL', label: 'GraphQL' },
+    { value: 'Redis', label: 'Redis' },
+    { value: 'AWS', label: 'AWS' },
+    { value: 'CI/CD', label: 'CI/CD' },
 ];
 
 export default function CreateProjectModal({ onClose }) {
+
+
+
+    const [description1, setDescription1] = useState({ en: '', es: '', ca: '' });
+    const [description2, setDescription2] = useState({ en: '', es: '', ca: '' });
+    const [selectedTechnologies, setSelectedTechnologies] = useState([]);
+
+    // Barra de herramientas igual que en admin/bio.jsx
+    const quillToolbar = [
+        [{ header: [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link'],
+        ['clean'],
+    ];
+
+    function handleDesc1Change(lang, value) {
+        setDescription1((prev) => ({ ...prev, [lang]: value }));
+    }
+
+    function handleDesc2Change(lang, value) {
+        setDescription2((prev) => ({ ...prev, [lang]: value }));
+    }
 
     return (
         <div className="cmp-overlay" onClick={onClose}>
@@ -59,16 +102,29 @@ export default function CreateProjectModal({ onClose }) {
                                 <h2 className="cmp-section-title">Tecnologías</h2>
                                 <p className="cmp-section-desc">Selecciona las tecnologías usadas en este proyecto.</p>
                             </div>
-                            <select
+                            <Select
+                                isMulti
                                 name="technologies"
-                                className="cmp-multiselect"
-                                multiple
-                                size={6}
-                            >
-                                {TECHNOLOGIES.map((tech) => (
-                                    <option key={tech} value={tech}>{tech}</option>
-                                ))}
-                            </select>
+                                options={TECHNOLOGIES}
+                                value={selectedTechnologies}
+                                onChange={(selected) => setSelectedTechnologies(selected)}
+                                placeholder="Selecciona tecnologías..."
+                                noOptionsMessage={() => 'No se encontraron tecnologías'}
+                                classNamePrefix="cmp-select"
+                                styles={{
+                                    input: (base) => ({
+                                        ...base,
+                                        outline: 'none',
+                                        boxShadow: 'none',
+                                    }),
+                                    control: (base, state) => ({
+                                        ...base,
+                                        outline: 'none',
+                                        boxShadow: 'none',
+                                        borderColor: state.isFocused ? '#6366f1' : '#d1d5db',
+                                    }),
+                                }}
+                            />
                             <p className="cmp-multiselect-hint">
                                 Mantén Ctrl (Windows) o Cmd (Mac) para seleccionar varias.
                             </p>
@@ -86,12 +142,12 @@ export default function CreateProjectModal({ onClose }) {
                                         <label className="cmp-label" htmlFor={`description1_${lang.id}`}>
                                             Descripción 1 — {lang.label}
                                         </label>
-                                        <textarea
-                                            id={`description1_${lang.id}`}
-                                            name={`description1_${lang.id}`}
-                                            className="cmp-textarea"
+                                        <ReactQuill
+                                            theme="snow"
+                                            value={description1[lang.id]}
+                                            onChange={(value) => handleDesc1Change(lang.id, value)}
                                             placeholder={`Descripción en ${lang.label.toLowerCase()}`}
-                                            rows={5}
+                                            modules={{ toolbar: quillToolbar }}
                                         />
                                     </div>
                                 ))}
@@ -137,12 +193,12 @@ export default function CreateProjectModal({ onClose }) {
                                         <label className="cmp-label" htmlFor={`description2_${lang.id}`}>
                                             Descripción 2 — {lang.label}
                                         </label>
-                                        <textarea
-                                            id={`description2_${lang.id}`}
-                                            name={`description2_${lang.id}`}
-                                            className="cmp-textarea"
+                                        <ReactQuill
+                                            theme="snow"
+                                            value={description2[lang.id]}
+                                            onChange={(value) => handleDesc2Change(lang.id, value)}
                                             placeholder={`Descripción en ${lang.label.toLowerCase()}`}
-                                            rows={5}
+                                            modules={{ toolbar: quillToolbar }}
                                         />
                                     </div>
                                 ))}
