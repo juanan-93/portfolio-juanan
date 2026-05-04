@@ -10,7 +10,7 @@ import { usePage } from '@inertiajs/react';
 export default function Dashboard() {
 
     //variable de panel de controladro
-    const { bio } = usePage().props;
+    const { bio,projects } = usePage().props;
     const [activeTab, setActiveTab] = useState('bio');
 
     const tabs = [
@@ -22,7 +22,7 @@ export default function Dashboard() {
     {
         id: 'projects',
         label: 'Proyectos',
-        content: <Projects />,
+        content: <Projects projects={projects} />,
     },
 ];
 

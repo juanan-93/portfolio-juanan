@@ -41,18 +41,20 @@ const quillToolbar = [
     ['clean'],
 ];
 
-export default function CreateProjectModal({ onClose }) {
+// Recibe el proyecto a editar como prop
+export default function UpdateProjectModal({ project, onClose }) {
 
-    // useForm de Inertia gestiona el estado, el envío y los errores
-    const { data, setData, post, processing, errors } = useForm({
-        title:        { en: '', es: '', ca: '' },
-        description1: { en: '', es: '', ca: '' },
-        description2: { en: '', es: '', ca: '' },
-        technologies: [],
+    if (!project) return null;
+
+    // Inicializa useForm con los datos existentes del proyecto
+    const { data, setData, put, processing, errors } = useForm({
+        title:        project.title        ?? { en: '', es: '', ca: '' },
+        description1: project.description1 ?? { en: '', es: '', ca: '' },
+        description2: project.description2 ?? { en: '', es: '', ca: '' },
+        technologies: project.technologies ?? [],
         images:       [],
     });
 
-    // Actualiza campos multiidioma conservando los otros idiomas
     function handleMultilang(field, lang, value) {
         setData(field, {
             ...data[field],
@@ -60,28 +62,25 @@ export default function CreateProjectModal({ onClose }) {
         });
     }
 
-    // Convierte las opciones seleccionadas de react-select a array de strings
     function handleTechnologies(selected) {
         setData('technologies', selected ? selected.map((t) => t.value) : []);
     }
 
-    // Actualiza la imagen en la posición correcta del array
     function handleImages(index, file) {
         const newImages = [...data.images];
         newImages[index] = file;
         setData('images', newImages);
     }
 
-    // Envía el formulario a Laravel
     function handleSubmit(e) {
         e.preventDefault();
-        post(route('project.store'), {
+        put(route('project.update', project.id), {
             forceFormData: true,
             onSuccess: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: '¡Guardado!',
-                    text: 'El proyecto se ha guardado correctamente.',
+                    title: '¡Actualizado!',
+                    text: 'El proyecto se ha actualizado correctamente.',
                     timer: 2000,
                     showConfirmButton: false,
                 });
@@ -96,14 +95,12 @@ export default function CreateProjectModal({ onClose }) {
 
                 {/* ── BARRA DE TÍTULO ─────────────────────────────── */}
                 <div className="cmp-titlebar">
-                    <span>Nuevo proyecto</span>
+                    <span>Editar proyecto</span>
                     <button className="cmp-titlebar-close" type="button" onClick={onClose}>✕</button>
                 </div>
 
                 {/* ── CUERPO ──────────────────────────────────────── */}
                 <div className="cmp-body">
-
-                    {/* onSubmit conecta el formulario con handleSubmit */}
                     <form className="cmp-form" onSubmit={handleSubmit}>
 
                         {/* ── SECCIÓN: TÍTULOS ────────────────────── */}
@@ -200,8 +197,31 @@ export default function CreateProjectModal({ onClose }) {
                         <div className="cmp-section">
                             <div className="cmp-section-header">
                                 <h2 className="cmp-section-title">Imágenes</h2>
-                                <p className="cmp-section-desc">Sube hasta 5 imágenes del proyecto.</p>
+                                <p className="cmp-section-desc">
+                                    Sube nuevas imágenes para reemplazar las existentes.
+                                    Si no seleccionas ninguna se conservan las actuales.
+                                </p>
                             </div>
+
+                            {/* Imágenes actuales */}
+                            {project.images && project.images.length > 0 && (
+                                <div className="cmp-images-grid" style={{ marginBottom: '16px' }}>
+                                    {project.images.map((img, index) => (
+                                        <div key={index} className="cmp-image-slot">
+                                            <div className="cmp-image-preview" style={{ padding: 0, overflow: 'hidden' }}>
+                                                <img
+                                                    src={`/storage/${img}`}
+                                                    alt={`Imagen ${index + 1}`}
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                />
+                                            </div>
+                                            <p className="cmp-multiselect-hint">Imagen actual {index + 1}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Nuevas imágenes */}
                             <div className="cmp-images-grid">
                                 {[0, 1, 2, 3, 4].map((index) => (
                                     <div key={index} className="cmp-image-slot">
@@ -209,7 +229,7 @@ export default function CreateProjectModal({ onClose }) {
                                             <span className="cmp-image-placeholder">+</span>
                                         </div>
                                         <label className="cmp-label" htmlFor={`image_${index}`}>
-                                            Imagen {index + 1}
+                                            Nueva imagen {index + 1}
                                         </label>
                                         <input
                                             id={`image_${index}`}
@@ -265,7 +285,7 @@ export default function CreateProjectModal({ onClose }) {
                                 className="cmp-btn-submit"
                                 disabled={processing}
                             >
-                                {processing ? 'Guardando...' : 'Guardar proyecto'}
+                                {processing ? 'Actualizando...' : 'Actualizar proyecto'}
                             </button>
                         </div>
 

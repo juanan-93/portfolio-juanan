@@ -4,34 +4,22 @@ import DataTable from 'datatables.net-react';
 import DT from 'datatables.net-dt';
 import 'datatables.net-dt/css/dataTables.dataTables.css';
 import CreateProjectModal from '@/Components/CreateProjectModal';
+import UpdateProjectModal from '@/Components/UpdateProjectModal';
 
 DataTable.use(DT);
 
-// Datos de prueba — luego vendrán del controlador Laravel
-const MOCK_PROJECTS = [
-    {
-        id: 1,
-        title: 'Portal Interno de Gestión',
-        description: 'Migración de procesos manuales a una aplicación interna con panel de control y permisos por rol.',
-    },
-    {
-        id: 2,
-        title: 'Dashboard de KPIs',
-        description: 'Panel con métricas de ventas, actividad de usuarios y comparativas por periodos.',
-    },
-    {
-        id: 3,
-        title: 'Automatización de Reportes',
-        description: 'Sistema para generar reportes periódicos y enviarlos automáticamente a distintos departamentos.',
-    },
-];
+// Elimina las etiquetas HTML y devuelve solo el texto plano
+function stripHtml(html) {
+    if (!html) return '—';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '—';
+}
 
-export default function Projects() {
+export default function Projects({ projects = [] }) {
+
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-
-    function handleEdit(project) {
-        console.log('Editar', project);
-    }
+    const [projectToEdit, setProjectToEdit] = useState(null);
 
     function handleDelete(project) {
         console.log('Eliminar', project);
@@ -40,10 +28,18 @@ export default function Projects() {
     return (
         <section className="projects-section">
 
+            {/* Modal crear */}
+            {isCreateModalOpen && (
+                <CreateProjectModal onClose={() => setIsCreateModalOpen(false)} />
+            )}
 
-			{isCreateModalOpen && (
-				<CreateProjectModal onClose={() => setIsCreateModalOpen(false)} />
-			)}
+            {/* Modal editar */}
+            {projectToEdit && (
+                <UpdateProjectModal
+                    project={projectToEdit}
+                    onClose={() => setProjectToEdit(null)}
+                />
+            )}
 
             {/* ── Cabecera ─────────────────────────────────────────── */}
             <div className="projects-header">
@@ -62,9 +58,13 @@ export default function Projects() {
                             Todos los proyectos disponibles en el portfolio.
                         </p>
                     </div>
-                    <button className="projects-add-btn" type="button" onClick={() => setIsCreateModalOpen(true)}>
-						+ Añadir proyecto
-					</button>
+                    <button
+                        className="projects-add-btn"
+                        type="button"
+                        onClick={() => setIsCreateModalOpen(true)}
+                    >
+                        + Añadir proyecto
+                    </button>
                 </div>
 
                 {/* ── Tabla DataTables ──────────────────────────────── */}
@@ -99,20 +99,20 @@ export default function Projects() {
                             </tr>
                         </thead>
                         <tbody>
-                            {MOCK_PROJECTS.map((project) => (
+                            {projects.map((project) => (
                                 <tr key={project.id}>
                                     <td className="projects-table-title">
-                                        {project.title}
+                                        {project.title?.es ?? project.title?.en ?? '—'}
                                     </td>
                                     <td className="projects-table-description">
-                                        {project.description}
+                                        {stripHtml(project.description1?.es ?? project.description1?.en)}
                                     </td>
                                     <td>
                                         <div className="projects-actions">
                                             <button
                                                 type="button"
                                                 className="projects-btn-edit"
-                                                onClick={() => handleEdit(project)}
+                                                onClick={() => setProjectToEdit(project)}
                                             >
                                                 Editar
                                             </button>

@@ -55,6 +55,7 @@
 
 .projects-table {
     @apply w-full text-sm text-left text-gray-700;
+    table-layout: fixed;
 }
 
 .projects-table thead {
@@ -74,14 +75,47 @@
 }
 
 /* ====================================================================
+   PROJECTS - Ancho fijo de columnas
+   ==================================================================== */
+.projects-table th:nth-child(1),
+.projects-table td:nth-child(1) {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.projects-table th:nth-child(2),
+.projects-table td:nth-child(2) {
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    overflow: hidden;
+}
+
+.projects-table th:nth-child(3),
+.projects-table td:nth-child(3) {
+    width: 140px;
+    min-width: 140px;
+}
+
+/* ====================================================================
    PROJECTS - Celdas específicas
    ==================================================================== */
 .projects-table-title {
     @apply font-medium text-gray-900;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .projects-table-description {
-    @apply text-gray-500 text-sm leading-relaxed max-w-sm;
+    @apply text-gray-500 text-sm leading-relaxed;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 /* ====================================================================
@@ -105,3 +139,4 @@
 .projects-empty {
     @apply py-12 text-center text-sm text-gray-500;
 }
+

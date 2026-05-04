@@ -14,8 +14,9 @@ class AdminPanelController extends Controller
     public function index(): Response
     {
         $bio = Bio::first();
+        $projects = Project::all();
 
-        return Inertia::render('Dashboard', ['bio' => $bio]);
+        return Inertia::render('Dashboard', ['bio' => $bio, 'projects' => $projects]);
     }
 
     // AÑADE ESTE MÉTODO NUEVO
@@ -229,6 +230,49 @@ class AdminPanelController extends Controller
         return redirect()->route('dashboard')->with('success', '¡Proyecto guardado!');
     }
 
+    public function updateProject(Request $request, Project $project)
+    {
+        $validated = $request->validate([
+            'title'          => 'required|array',
+            'title.en'       => 'required|string|max:255',
+            'title.es'       => 'required|string|max:255',
+            'title.ca'       => 'required|string|max:255',
+
+            'description1'      => 'required|array',
+            'description1.en'   => 'required|string',
+            'description1.es'   => 'required|string',
+            'description1.ca'   => 'required|string',
+
+            'description2'      => 'nullable|array',
+            'description2.en'   => 'nullable|string',
+            'description2.es'   => 'nullable|string',
+            'description2.ca'   => 'nullable|string',
+
+            'technologies'   => 'nullable|array',
+            'technologies.*' => 'nullable|string',
+
+            'images'         => 'nullable|array|max:5',
+            'images.*'       => 'nullable|image|max:2048',
+        ]);
+
+        // Si vienen imágenes nuevas las procesamos
+        // Si no vienen las conservamos
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                if ($image) {
+                    $imagePaths[] = $image->store('projects', 'public');
+                }
+            }
+            $validated['images'] = $imagePaths;
+        } else {
+            unset($validated['images']);
+        }
+
+        $project->update($validated);
+
+        return redirect()->route('dashboard')->with('success', '¡Proyecto actualizado!');
+    }
 
 
 }
