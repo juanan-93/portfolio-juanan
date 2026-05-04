@@ -274,5 +274,12 @@ class AdminPanelController extends Controller
         return redirect()->route('dashboard')->with('success', '¡Proyecto actualizado!');
     }
 
+    public function destroyProject(Project $project)
+    {
+        $project->delete();
+
+        return redirect()->route('dashboard')->with('success', '¡Proyecto eliminado!');
+    }
+
 
 }

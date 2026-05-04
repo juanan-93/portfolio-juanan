@@ -57,6 +57,8 @@ Route::put('/admin/bio/{bio}', [AdminPanelController::class, 'updateBio'])->name
 Route::post('/admin/projects', [AdminPanelController::class, 'storeProject'])->name('project.store');
 // Projects update
 Route::put('/admin/projects/{project}', [AdminPanelController::class, 'updateProject'])->name('project.update');
+// Projects delete
+Route::delete('/admin/projects/{project}', [AdminPanelController::class, 'destroyProject'])->name('project.destroy');
 
 // Rutas protegidas por autenticación
 Route::middleware('auth')->group(function () {

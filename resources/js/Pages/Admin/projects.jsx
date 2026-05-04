@@ -5,6 +5,8 @@ import DT from 'datatables.net-dt';
 import 'datatables.net-dt/css/dataTables.dataTables.css';
 import CreateProjectModal from '@/Components/CreateProjectModal';
 import UpdateProjectModal from '@/Components/UpdateProjectModal';
+import { router } from '@inertiajs/react';
+import Swal from 'sweetalert2';
 
 DataTable.use(DT);
 
@@ -22,7 +24,30 @@ export default function Projects({ projects = [] }) {
     const [projectToEdit, setProjectToEdit] = useState(null);
 
     function handleDelete(project) {
-        console.log('Eliminar', project);
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: `¿Deseas eliminar el proyecto "${project.title?.es ?? project.title?.en}"? Esta acción no se puede deshacer.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('project.destroy', project.id), {
+                    onSuccess: () => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Eliminado!',
+                            text: 'El proyecto se ha eliminado correctamente.',
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+                    },
+                });
+            }
+        });
     }
 
     return (
